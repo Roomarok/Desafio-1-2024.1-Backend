@@ -1,0 +1,74 @@
+** start of script.js **
+
+function checkCashRegister(price, cash, cid) {
+  const currencyUnits = [
+    ["ONE HUNDRED", 100],
+    ["TWENTY", 20],
+    ["TEN", 10],
+    ["FIVE", 5],
+    ["ONE", 1],
+    ["QUARTER", 0.25],
+    ["DIME", 0.1],
+    ["NICKEL", 0.05],
+    ["PENNY", 0.01]
+  ];
+
+  // Change needed
+  let changeDue = cash - price;
+
+  // Total cash in drawer (rounded to cents)
+  let totalCid = Math.round(
+    cid.reduce((sum, [, amount]) => sum + amount, 0) * 100
+  ) / 100;
+
+  // Not enough money in drawer at all
+  if (totalCid < changeDue) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  }
+
+  // Exact match: drawer will be closed
+  if (totalCid === changeDue) {
+    // Must return cid as-is (FCC requirement)
+    return { status: "CLOSED", change: cid };
+  }
+
+  // Build a quick lookup: { "PENNY": 1.01, ... }
+  const cidMap = Object.fromEntries(cid);
+  const change = [];
+
+  // Greedy dispense from highest to lowest units
+  for (const [unit, value] of currencyUnits) {
+    let amountInDrawer = cidMap[unit]; // total amount for this unit
+    if (!amountInDrawer || amountInDrawer <= 0) continue;
+
+    let amountToReturn = 0;
+
+    // While we still need this denom and there is some in drawer
+    while (changeDue >= value && amountInDrawer >= value) {
+      changeDue -= value;
+      amountInDrawer -= value;
+      amountToReturn += value;
+
+      // Avoid floating-point drift: keep to cents
+      changeDue = Math.round(changeDue * 100) / 100;
+      amountInDrawer = Math.round(amountInDrawer * 100) / 100;
+    }
+
+    if (amountToReturn > 0) {
+      // Round to cents just in case
+      amountToReturn = Math.round(amountToReturn * 100) / 100;
+      change.push([unit, amountToReturn]);
+    }
+  }
+
+  // If we couldn't make exact change with available denominations
+  if (changeDue > 0) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
+  }
+
+  return { status: "OPEN", change };
+}
+
+
+** end of script.js **
+
