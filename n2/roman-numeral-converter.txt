@@ -1,0 +1,78 @@
+** start of script.js **
+
+function convertToRoman(num) {
+  let caracteres = "IVXLCDM";
+  let saida = "";
+  while(num >= 1000)
+  {
+    num -= 1000;
+    saida += 'M';
+  }
+  while(1000 > num && num >= 900)
+  {
+    num -= 900;
+    saida += "CM";
+  }
+  while(900 > num && num >= 500)
+  {
+    num -= 500;
+    saida += "D";
+  }
+  console.log(saida)
+  while(500 > num && num >= 400)
+  {
+    num -= 400;
+    saida += 'CD';
+  }
+  while(400 > num && num >= 100)
+  {
+    num -= 100;
+    saida += 'C';
+  }
+  while(100 > num && num >= 90)
+  {
+    num -= 90;
+    saida += 'XC';
+  }
+  while(90 > num && num >= 50)
+  {
+    num -= 50;
+    saida += 'L';
+  }
+  while(50 > num && num >= 40)
+  {
+    num -= 40;
+    saida += 'XL';
+  }
+  while(40 > num && num >= 10)
+  {
+    num -= 10;
+    saida += 'X';
+  }
+  while(10 > num && num >= 9)
+  {
+    num -= 9;
+    saida += 'IX';
+  }
+  while(9 > num && num >= 5)
+  {
+    num -= 5;
+    saida += 'V';
+  }
+  while(5 > num && num >= 4)
+  {
+    num -= 4;
+    saida += 'IV';
+  }
+  while(4 > num && num >= 1)
+  {
+    num -= 1;
+    saida += 'I';
+  }
+  return saida;
+}
+
+convertToRoman(2800);
+
+** end of script.js **
+
