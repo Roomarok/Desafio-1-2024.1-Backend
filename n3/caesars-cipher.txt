@@ -1,0 +1,24 @@
+** start of script.js **
+
+function rot13(entrada) {
+  let saida = '';
+  for(let i = 0; i < entrada.length ; i++)
+  {
+    let codigo = entrada[i].charCodeAt();
+    if (codigo >= 65 && codigo <= 90)
+    {
+      codigo -= 13;
+      if (codigo < 65)
+      {
+        codigo += 26;
+      }
+    }
+    saida += String.fromCharCode(codigo);
+  }
+  return saida;
+}
+
+rot13("SERR PBQR PNZC");
+
+** end of script.js **
+
