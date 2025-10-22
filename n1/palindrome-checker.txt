@@ -1,0 +1,15 @@
+** start of script.js **
+
+function palindrome(palavra) {
+  let palavra_limpa = palavra.toLowerCase().replace(/[^a-z0-9]/g, "");
+  console.log(palavra_limpa);
+  for(let i = 0 ; i < palavra_limpa.length ; i++){
+    if(palavra_limpa[i] != palavra_limpa[palavra_limpa.length-i-1]){return false;}
+  }
+  return true;
+}
+
+console.log(palindrome("not a palindrome"));
+
+** end of script.js **
+
